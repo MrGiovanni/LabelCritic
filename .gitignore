@@ -5,3 +5,9 @@ data/
 HFCache/
 results/
 comparison_results/
+comparison_summary.log
+dice_0.3_0.8_cases.csv
+PANTS/
+AnnotationVLM_/
+__pycache__/
+*.pyc

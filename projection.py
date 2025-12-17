@@ -514,7 +514,7 @@ def project_ct_and_masks(pid, ct_pth, mask_pth, device='cuda',axis=1,th=0.5,save
         #print('time to load and project ct:',time.time()-start)
     else:
         cts={}
-        for window in ['organs','bone','skeleton']:
+        for window in ['skeleton', 'organs','bone']:
             filename = f"{pid}_ct_window_{window}_axis_{axis}.png"
             filepath = os.path.join(save_path, pid, filename) if save_path else filename
             cts[window]=torch.rot90(torch.from_numpy(cv2.imread(filepath, cv2.IMREAD_GRAYSCALE)/255.0).float(), k=-1, dims=(0, 1))

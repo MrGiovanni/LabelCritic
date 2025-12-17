@@ -4897,7 +4897,7 @@ def SystematicComparison3MessagesLMDeploy2Figs(pth,base_url='http://0.0.0.0:8000
                 
 
             print(target)
-            print('Best is:',best)
+            #print('Best is:',best)
             print('Annotation:',twoImages) 
 
             if dice_check:

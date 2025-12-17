@@ -36,13 +36,17 @@ parser.add_argument('--shapeless', action='store_true', default=False,
                     help='Ignore shape evaluation for pancreas/stomach/gallbladder')
 parser.add_argument('--simple_prompt_ablation', action='store_true', default=False,
                     help='Use simplified prompt for ablation study')
-
+parser.add_argument(
+    '--base_url',
+    type=str,
+    default='http://udc-ba02-35',
+    help='Base API host, without port'
+)
 # Parse arguments
 args = parser.parse_args()
 
 # Build base API URL
-base_url = f'http://udc-ba02-35:{args.port}/v1'
-
+base_url = f'{args.base_url}:{args.port}/v1'
 # Determine organ name
 organ = args.organ
 path = args.path
@@ -89,8 +93,8 @@ ed.SystematicComparisonLMDeploySepFigures(
 
 '''
 python RunAPI_single.py \
-  --good_proj /home2/jzs6wq/data/Deprecated/AnnotationVLM/comparison_results/bad_projection/pancreas \
-  --bad_proj /home2/jzs6wq/data/Deprecated/AnnotationVLM/comparison_results/good_projection/pancreas \
+  --good_proj ./comparison_results/good_projection/pancreas \
+  --bad_proj ./comparison_results/bad_projection/pancreas \
   --organ pancreas \
   --csv_path results/pancreas_eval.csv \
   --port 8000
