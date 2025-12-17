@@ -52,12 +52,7 @@ pip install -r requirements.txt
 mkdir HFCache
 ```
 
-Tip: If you encounter dependency or version-conflict errors when installing vllm or transformers,
-you can relax the version constraints, for example:
-```bash
-pip install vllm
-pip install transformers
-```
+
 
 ### Deploy LLM API
 
