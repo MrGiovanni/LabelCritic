@@ -154,11 +154,3 @@ python3 RunErrorDetection.py --path /path/to/projections/directory/ --port 8000 
   <img src="https://github.com/PedroRASB/Cerberus/blob/main/misc/LabelCriticLogos.png" alt="Project Logo" width="900"/>
 </p>
 
-
-
-TRANSFORMERS_CACHE=./HFCache HF_HOME=./HFCache CUDA_VISIBLE_DEVICES=3 vllm serve "Qwen/Qwen2-VL-2B-Instruct-AWQ" \
-  --dtype=half \
-  --tensor-parallel-size 1 \
-  --limit-mm-per-prompt image=3 \
-  --gpu_memory_utilization 0.9 \
-  --port 8000
