@@ -47,7 +47,7 @@ Label Critic evaluates the quality of AI-generated annotations by:
 No additional model training is required.
 
 
-## Code
+## Getting Started
 
 This repository provides an end-to-end pipeline for running Label Critic,
 including dataset projection, LVLM-based comparison, and error detection.
