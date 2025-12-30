@@ -6,11 +6,10 @@
   <img src="https://github.com/PedroRASB/Cerberus/blob/main/misc/LabelCriticModel.png" alt="Project Logo" width="900"/>
 </p>
 
-
 AI-generated annotations are increasingly used to build large datasets,
 yet their quality is often assumed rather than verified.
 
-Label Critic is a lightweight tool for reviewing AI-generated labels.
+Label Critic is an automated tool for reviewing AI-generated labels.
 It helps users select better annotations when multiple label options exist,
 and identify potentially incorrect labels when only a single annotation is available.
 
