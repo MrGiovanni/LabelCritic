@@ -49,7 +49,12 @@ No additional model training is required.
 
 ## Code
 
+This repository provides an end-to-end pipeline for running Label Critic,
+including dataset projection, LVLM-based comparison, and error detection.
+
 ### Installation
+
+We recommend using Anaconda on Linux.
 
 <details>
 <summary style="margin-left: 25px;">[Optional] Install Anaconda on Linux</summary>
