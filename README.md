@@ -96,6 +96,7 @@ vllm serve "Qwen/Qwen2-VL-72B-Instruct-AWQ" \
   --limit-mm-per-prompt image=3 \
   --gpu_memory_utilization 0.9 \
   --port 8000
+```
 
 By default, Label Critic connects to the LVLM API at localhost:8000.
 If you deploy the model on a different host or port, update the corresponding
