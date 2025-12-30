@@ -158,7 +158,12 @@ Dataset
 </div>
 </details>
 
-  
+
+## Usage
+
+Label Critic supports multiple usage scenarios depending on the available
+annotations and the desired level of analysis.
+
 ### Label Critic: dataset projection
 This code creates 2D projections of a CT dataset and its labels. The command is designed to project two datasets, which represents two set of labels you would like to compare. Both datasets should be in the same format and have matching folder and label names. You can compare your dataset labels (/path/to/Dataset1/) to alternative labels produced by a public AI model (/path/to/Dataset2/). For organ segmentation on CT, you can find many state-of-the-art public AI models in the [Touchstone Benchmark](https://github.com/mrgiovanni/touchstone)
 
