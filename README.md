@@ -123,6 +123,8 @@ python3 ProjectDatasetFlex.py \
 ```
 
 <details> <summary><strong>Dataset format (click to expand)</strong></summary>
+<div style="margin-left: 25px;">
+
 ```
 Dataset
 ├── BDMAP_A0000001
@@ -153,6 +155,7 @@ Dataset
 │          └──...
 ...
 ```
+</div>
 </details>
 
   
