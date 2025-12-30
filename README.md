@@ -36,6 +36,17 @@ International Symposium on Biomedical Imaging (ISBI, 2025) <br/>
 
 [![YouTube](https://badges.aleen42.com/src/youtube.svg)](https://youtu.be/9D5-pFgtgDQ)
 
+
+## How Label Critic Works (High-level)
+
+Label Critic evaluates the quality of AI-generated annotations by:
+1. Projecting 3D images and labels into informative 2D views
+2. Using a pre-trained vision-language model to compare or assess annotations
+3. Selecting better candidates or flagging potentially incorrect labels
+
+No additional model training is required.
+
+
 ## Code
 
 ### Installation
