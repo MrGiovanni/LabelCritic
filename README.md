@@ -112,7 +112,7 @@ by projecting each volume into informative views.
 When comparing two sets of annotations (e.g., labels from two different models),
 both datasets must share the same directory structure and file naming.
 You may compare your dataset annotations against alternatives produced by
-public AI models (e.g., from the Touchstone Benchmark).
+public AI models (e.g., from the [Touchstone Benchmark](https://github.com/mrgiovanni/touchstone)).
 
 ```bash
 python3 ProjectDatasetFlex.py \
