@@ -72,18 +72,34 @@ mkdir HFCache
 
 
 
-### Deploy Vision-Language Model Backend
+### Deploy Vision–Language Model Backend
 
-Label Critic relies on a pre-trained vision-language model served as an API.
-Below is an example deployment using Qwen2-VL via vLLM.
+Label Critic uses a pre-trained vision–language model (LVLM) served as an API
+to assess and compare annotations. No model training is required.
 
-Deploy API locally (tensor-parallel-size should be the number of GPUs, and it accepts only powers of 2).
+Below is an example of deploying **Qwen2-VL** locally using **vLLM**.
+You may substitute other LVLM backends as long as they expose a compatible API.
+
+> **Note**  
+> The tensor parallel size must match the number of available GPUs  
+> and must be a power of two.
+
 ```bash
 export NCCL_P2P_DISABLE=1
-TRANSFORMERS_CACHE=./HFCache HF_HOME=./HFCache CUDA_VISIBLE_DEVICES=0,1,2,3 vllm serve "Qwen/Qwen2-VL-72B-Instruct-AWQ" --dtype=half --tensor-parallel-size 4 --limit-mm-per-prompt image=3 --gpu_memory_utilization 0.9 --port 8000
-```
 
-Other LVLM backends can be substituted with minimal changes.
+TRANSFORMERS_CACHE=./HFCache \
+HF_HOME=./HFCache \
+CUDA_VISIBLE_DEVICES=0,1,2,3 \
+vllm serve "Qwen/Qwen2-VL-72B-Instruct-AWQ" \
+  --dtype=half \
+  --tensor-parallel-size 4 \
+  --limit-mm-per-prompt image=3 \
+  --gpu_memory_utilization 0.9 \
+  --port 8000
+
+By default, Label Critic connects to the LVLM API at localhost:8000.
+If you deploy the model on a different host or port, update the corresponding
+arguments when running Label Critic.
 
 ### Label Critic: dataset projection
 This code creates 2D projections of a CT dataset and its labels. The command is designed to project two datasets, which represents two set of labels you would like to compare. Both datasets should be in the same format and have matching folder and label names. You can compare your dataset labels (/path/to/Dataset1/) to alternative labels produced by a public AI model (/path/to/Dataset2/). For organ segmentation on CT, you can find many state-of-the-art public AI models in the [Touchstone Benchmark](https://github.com/mrgiovanni/touchstone)
