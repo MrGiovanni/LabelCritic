@@ -102,6 +102,60 @@ By default, Label Critic connects to the LVLM API at localhost:8000.
 If you deploy the model on a different host or port, update the corresponding
 arguments when running Label Critic.
 
+
+### Label Critic: Dataset Projection
+
+Label Critic operates on 2D projections of 3D CT images and their corresponding
+annotations. This step prepares the inputs for comparison or quality assessment
+by projecting each volume into informative views.
+
+When comparing two sets of annotations (e.g., labels from two different models),
+both datasets must share the same directory structure and file naming.
+You may compare your dataset annotations against alternatives produced by
+public AI models (e.g., from the Touchstone Benchmark).
+
+```bash
+python3 ProjectDatasetFlex.py \
+  --good_folder /path/to/Dataset1/ \
+  --bad_folder /path/to/Dataset2/ \
+  --output_dir1 /path/to/projections/directory/ \
+  --num_processes 10
+```
+
+<details> <summary><strong>Dataset format (click to expand)</strong></summary>
+```
+Dataset
+├── BDMAP_A0000001
+|    ├── ct.nii.gz
+│    └── predictions
+│          ├── liver_tumor.nii.gz
+│          ├── kidney_tumor.nii.gz
+│          ├── pancreas_tumor.nii.gz
+│          ├── aorta.nii.gz
+│          ├── gall_bladder.nii.gz
+│          ├── kidney_left.nii.gz
+│          ├── kidney_right.nii.gz
+│          ├── liver.nii.gz
+│          ├── pancreas.nii.gz
+│          └──...
+├── BDMAP_A0000002
+|    ├── ct.nii.gz
+│    └── predictions
+│          ├── liver_tumor.nii.gz
+│          ├── kidney_tumor.nii.gz
+│          ├── pancreas_tumor.nii.gz
+│          ├── aorta.nii.gz
+│          ├── gall_bladder.nii.gz
+│          ├── kidney_left.nii.gz
+│          ├── kidney_right.nii.gz
+│          ├── liver.nii.gz
+│          ├── pancreas.nii.gz
+│          └──...
+...
+```
+</details>
+
+  
 ### Label Critic: dataset projection
 This code creates 2D projections of a CT dataset and its labels. The command is designed to project two datasets, which represents two set of labels you would like to compare. Both datasets should be in the same format and have matching folder and label names. You can compare your dataset labels (/path/to/Dataset1/) to alternative labels produced by a public AI model (/path/to/Dataset2/). For organ segmentation on CT, you can find many state-of-the-art public AI models in the [Touchstone Benchmark](https://github.com/mrgiovanni/touchstone)
 
