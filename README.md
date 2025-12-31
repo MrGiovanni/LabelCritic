@@ -109,12 +109,11 @@ arguments when running Label Critic.
 
 Label Critic supports multiple usage scenarios depending on the available
 annotations and the desired level of analysis.
+### Scenario 1: Compare Two Annotation Sets (Dataset-Level)
 
-### Label Critic: Dataset Projection
-
-Label Critic operates on 2D projections of 3D CT images and their corresponding
-annotations. This step prepares the inputs for comparison or quality assessment
-by projecting each volume into informative views.
+Use this workflow when you have two sets of annotations (e.g., outputs from
+two different models) and want to select higher-quality labels across an entire
+dataset.
 
 When comparing two sets of annotations (e.g., labels from two different models),
 both datasets must share the same directory structure and file naming.
@@ -165,20 +164,20 @@ Dataset
 </div>
 </details>
 
-### Label Critic: Use LVLM for label comparisons
+
 This command uses the LVLM to compare the two sets of labels, using the projections saved in the command above. See the end of the comparisons.log file for a detailed log of the result of each comparison.
 
 ```bash
 python3 RunAPI.py --path /path/to/projections/directory/ > comparisons.log 2>&1
 ```
-
-or, to compare two individual labels instead of full label sets:
+### Scenario 2: Inspect Individual Annotation Pairs (Single Case)
+Compare two individual labels instead of full label sets:
 ```bash
 python3 compare_organ.py
 ```
 Edit the input paths directly inside compare_organ.py before running.
 
-### Label Critic: Error Detection
+### Scenario 3: Evaluate a Single Annotation Set (Error Detection)
 
 In case you do not have two sets of labels to compare, Label Critic can be used to evaluate a single set of labels, and judge if each one is correct or not. The --examples argument controls the number of examples of good and bad labels given to the LVLM (in-context learning). To use examples, you may check the labels and select a few good and bad examples, and place them in the folders /path/to/good/label/examples/ and /path/to/bad/label/examples/. After running the command, check the log file for a detailed output.
 
