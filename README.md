@@ -173,7 +173,7 @@ python3 RunAPI.py --path /path/to/projections/directory/ > comparisons.log 2>&1
 ### Scenario 2: Inspect Individual Annotation Pairs (Single Case)
 Compare two individual labels instead of full label sets:
 ```bash
-python3 Compare_organ.py
+python3 CompareOrgan.py
 ```
 Edit the input paths directly inside compare_organ.py before running.
 
