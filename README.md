@@ -6,9 +6,6 @@
   <img src="https://github.com/PedroRASB/Cerberus/blob/main/misc/LabelCriticModel.png" alt="Project Logo" width="900"/>
 </p>
 
-AI-generated annotations are increasingly used to build large datasets,
-yet their quality is often assumed rather than verified.
-
 Label Critic is an automated tool for reviewing AI-generated labels.
 It helps users select better annotations when multiple label options exist,
 and identify potentially incorrect labels when only a single annotation is available.
@@ -17,10 +14,6 @@ Label Critic uses pre-trained Large Vision-Language Models (LVLMs)
 as label critics, comparing or assessing annotations without training new models.
 In medical CT organ segmentation, it achieves 96.5% accuracy
 in selecting higher-quality annotations per scan and class.
-
-While this repository focuses on CT organ segmentation
-(pancreas, liver, spleen, kidneys, aorta, and others),
-the approach is data-centric and can be adapted to new classes with minimal effort.
 
 
 ## Paper
@@ -37,20 +30,10 @@ International Symposium on Biomedical Imaging (ISBI, 2025) <br/>
 [![YouTube](https://badges.aleen42.com/src/youtube.svg)](https://youtu.be/9D5-pFgtgDQ)
 
 
-## How Label Critic Works
-
-Label Critic evaluates the quality of AI-generated annotations by:
-1. Projecting 3D images and labels into informative 2D views
-2. Using a pre-trained vision-language model to compare or assess annotations
-3. Selecting better candidates or flagging potentially incorrect labels
-
-No additional model training is required.
 
 
 ## Getting Started
 
-This repository provides an end-to-end pipeline for running Label Critic,
-including dataset projection, LVLM-based comparison, and error detection.
 
 ### Installation
 
@@ -74,15 +57,7 @@ mkdir HFCache
 
 ### Deploy Vision–Language Model Backend
 
-Label Critic uses a pre-trained vision–language model (LVLM) served as an API
-to assess and compare annotations. No model training is required.
 
-Below is an example of deploying **Qwen2-VL** locally using **vLLM**.
-You may substitute other LVLM backends as long as they expose a compatible API.
-
-> **Note**  
-> The tensor parallel size must match the number of available GPUs  
-> and must be a power of two.
 
 ```bash
 export NCCL_P2P_DISABLE=1
@@ -98,9 +73,8 @@ vllm serve "Qwen/Qwen2-VL-72B-Instruct-AWQ" \
   --port 8000
 ```
 
-By default, Label Critic connects to the LVLM API at localhost:8000.
-If you deploy the model on a different host or port, update the corresponding
-arguments when running Label Critic.
+We recommend using ≥ 4 A40 GPUs (48GB VRAM each) for stable deployment.
+You can try different VL models, e.g.: Qwen/Qwen2-VL-2B-Instruct-AWQ.
 
 
 
@@ -111,22 +85,6 @@ Label Critic supports multiple usage scenarios depending on the available
 annotations and the desired level of analysis.
 ### Scenario 1: Compare Two Annotation Sets (Dataset-Level)
 
-Use this workflow when you have two sets of annotations (e.g., outputs from
-two different models) and want to select higher-quality labels across an entire
-dataset.
-
-When comparing two sets of annotations (e.g., labels from two different models),
-both datasets must share the same directory structure and file naming.
-You may compare your dataset annotations against alternatives produced by
-public AI models (e.g., from the [Touchstone Benchmark](https://github.com/mrgiovanni/touchstone)).
-
-```bash
-python3 ProjectDatasetFlex.py \
-  --good_folder /path/to/Dataset1/ \
-  --bad_folder /path/to/Dataset2/ \
-  --output_dir1 /path/to/projections/directory/ \
-  --num_processes 10
-```
 
 <details> <summary><strong>Dataset format (click to expand)</strong></summary>
 <div style="margin-left: 25px;">
@@ -135,7 +93,18 @@ python3 ProjectDatasetFlex.py \
 Dataset
 ├── BDMAP_A0000001
 |    ├── ct.nii.gz
-│    └── predictions
+│    └── predictions1
+│          ├── liver_tumor.nii.gz
+│          ├── kidney_tumor.nii.gz
+│          ├── pancreas_tumor.nii.gz
+│          ├── aorta.nii.gz
+│          ├── gall_bladder.nii.gz
+│          ├── kidney_left.nii.gz
+│          ├── kidney_right.nii.gz
+│          ├── liver.nii.gz
+│          ├── pancreas.nii.gz
+│          └──...
+│    └── predictions2
 │          ├── liver_tumor.nii.gz
 │          ├── kidney_tumor.nii.gz
 │          ├── pancreas_tumor.nii.gz
@@ -165,26 +134,20 @@ Dataset
 </details>
 
 
-This command uses the LVLM to compare the two sets of labels, using the projections saved in the command above. See the end of the comparisons.log file for a detailed log of the result of each comparison.
-
+Compare two individual labels:
 ```bash
-python3 RunAPI.py --path /path/to/projections/directory/ > comparisons.log 2>&1
-```
-### Scenario 2: Inspect Individual Annotation Pairs (Single Case)
-Compare two individual labels instead of full label sets:
-```bash
-python3 CompareOrgan.py
-```
-Edit the input paths directly inside compare_organ.py before running.
+python CompareOrgan.py \
+  --ct Dataset/BDMAP_A0000001/ct.nii.gz \
+  --mask1_subdir Dataset/BDMAP_A0000001/predictions1 \
+  --mask2_subdir Dataset/BDMAP_A0000001/predictions2 \
+  --organ pancreas \
+  --port 8000 \
+  --log_file ./comparison_summary.log
 
-### Scenario 3: Evaluate a Single Annotation Set (Error Detection)
-
-In case you do not have two sets of labels to compare, Label Critic can be used to evaluate a single set of labels, and judge if each one is correct or not. The --examples argument controls the number of examples of good and bad labels given to the LVLM (in-context learning). To use examples, you may check the labels and select a few good and bad examples, and place them in the folders /path/to/good/label/examples/ and /path/to/bad/label/examples/. After running the command, check the log file for a detailed output.
-
-```bash
-python3 ProjectDatasetFlex.py --good_folder /path/to/Dataset1/ --bad_folder /path/to/Dataset1/ --output_dir1 /path/to/projections/directory/ --num_processes 10
-python3 RunErrorDetection.py --path /path/to/projections/directory/ --port 8000 --organ [kidneys] --file_structure auto --examples 0 --good_examples_pth /path/to/good/label/examples/ --bad_examples_pth /path/to/bad/label/examples/ > organ.log 2>&1
 ```
+Edit the input paths directly inside CompareOrgan.py before running.
+
+
 
 # Citation
 
