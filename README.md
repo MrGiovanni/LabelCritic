@@ -79,12 +79,7 @@ You can try different VL models, e.g.: Qwen/Qwen2-VL-2B-Instruct-AWQ.
 
 
 
-## Usage
-
-Label Critic supports multiple usage scenarios depending on the available
-annotations and the desired level of analysis.
-
-### Scenario 1: Compare Two Annotations
+## Compare Two Annotations
 
 
 <details> <summary><strong>Dataset format (click to expand)</strong></summary>
