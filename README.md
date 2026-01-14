@@ -83,7 +83,8 @@ You can try different VL models, e.g.: Qwen/Qwen2-VL-2B-Instruct-AWQ.
 
 Label Critic supports multiple usage scenarios depending on the available
 annotations and the desired level of analysis.
-### Scenario 1: Compare Two Annotation Sets (Dataset-Level)
+
+### Scenario 1: Compare Two Annotations
 
 
 <details> <summary><strong>Dataset format (click to expand)</strong></summary>
@@ -115,19 +116,6 @@ Dataset
 │          ├── liver.nii.gz
 │          ├── pancreas.nii.gz
 │          └──...
-├── BDMAP_A0000002
-|    ├── ct.nii.gz
-│    └── predictions
-│          ├── liver_tumor.nii.gz
-│          ├── kidney_tumor.nii.gz
-│          ├── pancreas_tumor.nii.gz
-│          ├── aorta.nii.gz
-│          ├── gall_bladder.nii.gz
-│          ├── kidney_left.nii.gz
-│          ├── kidney_right.nii.gz
-│          ├── liver.nii.gz
-│          ├── pancreas.nii.gz
-│          └──...
 ...
 ```
 </div>
@@ -145,7 +133,9 @@ python CompareOrgan.py \
   --log_file ./comparison_summary.log
 
 ```
-Edit the input paths directly inside CompareOrgan.py before running.
+
+This command compares the pancreas segmentation between two prediction folders
+(predictions1 and predictions2) for a single CT case.
 
 
 
