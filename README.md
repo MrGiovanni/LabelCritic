@@ -121,8 +121,8 @@ Compare two individual labels:
 ```bash
 python CompareOrgan.py \
   --ct Dataset/BDMAP_A0000001/ct.nii.gz \
-  --mask1_subdir Dataset/BDMAP_A0000001/predictions1 \
-  --mask2_subdir Dataset/BDMAP_A0000001/predictions2 \
+  --mask1 Dataset/BDMAP_A0000001/predictions1 \
+  --mask2 Dataset/BDMAP_A0000001/predictions2 \
   --organ pancreas \
   --port 8000 \
   --log_file ./comparison_summary.log \
