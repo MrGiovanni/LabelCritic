@@ -10,4 +10,5 @@ dice_0.3_0.8_cases.csv
 PANTS/
 AnnotationVLM_/
 __pycache__/
-*.pyc
+*.pyc/
+bodymap_select.py

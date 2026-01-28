@@ -73,7 +73,7 @@ vllm serve "Qwen/Qwen2-VL-72B-Instruct-AWQ" \
   --port 8000
 ```
 
-We recommend using ≥ 4 A40 GPUs (48GB VRAM each) for stable deployment.
+We recommend using ≥ 4 A40 GPUs (48GB VRAM each) for stable deployment. An estimate of 144GB VRAM (GPU memory) is required for deployment.
 You can try different VL models, e.g.: Qwen/Qwen2-VL-2B-Instruct-AWQ.
 
 
@@ -125,8 +125,8 @@ python CompareOrgan.py \
   --mask2_subdir Dataset/BDMAP_A0000001/predictions2 \
   --organ pancreas \
   --port 8000 \
-  --log_file ./comparison_summary.log
-
+  --log_file ./comparison_summary.log \
+  --base_url "http://host"
 ```
 
 This command compares the pancreas segmentation between two prediction folders

@@ -5,12 +5,13 @@ import subprocess
 import uuid
 from datetime import datetime
 
-def compare_organ(ct_path, mask1_path, mask2_path, organ,
+def compare_organ(ct_path, mask1_path, mask2_path, organ,base_url,
                   base_output="./comparison_results", base_csv="./results",
                   port="8000", log_file="./comparison_summary.log", run_id = None):
     """
     Compare two segmentation masks using vLLM pipeline and write a detailed log.
     """
+    
     if run_id is None:
         run_id = uuid.uuid4().hex[:8]
     output_dir = os.path.join(base_output, f"{run_id}", f"{organ}")
@@ -39,7 +40,8 @@ def compare_organ(ct_path, mask1_path, mask2_path, organ,
             "--path", output_dir,
             "--organ", organ,
             "--csv_path", csv_path,
-            "--port", str(port)
+            "--port", str(port),
+            "--base_url", base_url
         ], check=True)
 
         # Step 3. Parse result
@@ -87,10 +89,12 @@ if __name__ == "__main__":
     parser.add_argument("--base_csv", default="./results", help="Base folder for CSV results")
     parser.add_argument("--port", default="8000", help="API server port (vLLM)")
     parser.add_argument("--log_file", default="./comparison_summary.log", help="File to append final comparison results")
+    parser.add_argument("--base_url", default="http://udc-ba02-35")
+
     args = parser.parse_args()
 
     best = compare_organ(
-        args.ct, args.mask1, args.mask2, args.organ,
+        args.ct, args.mask1, args.mask2, args.organ, args.base_url,
         base_output=args.base_output, base_csv=args.base_csv,
         port=args.port, log_file=args.log_file
     )
