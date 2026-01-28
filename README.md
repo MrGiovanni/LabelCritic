@@ -126,7 +126,7 @@ python CompareOrgan.py \
   --organ pancreas \
   --port 8000 \
   --log_file ./comparison_summary.log \
-  --base_url "http://host"
+  --base_url "http://vllm_server_host"
 ```
 
 This command compares the pancreas segmentation between two prediction folders
